@@ -1,0 +1,156 @@
+/*
+//------- Pila --------
+
+/*(11)Descripción: Apila o Inserta un nodo conteniendo
+     a e al inicio de la lista direccionada por p.
+Parámetros:
+• Node<T>*& p – Puntero al primer nodo de la lista.
+• T e – Elemento que vamos a agregar al inicio de la
+   lista (apilar).
+Retorna: Node<T>* – Dirección del nodo que contiene
+ al elemento que se agregó.
+*/
+////////////////////////////////
+template <typename T>Node<T>* push(
+ Node<T>*& p, T e){
+
+ return addFirst<T>(p,e);
+}
+
+/*(12)Descripción: Desapila o Remueve el primer nodo
+   de la lista direccionada por p..
+Parámetro: Node<T>*& p – Puntero al primer nodo de la
+ lista.
+Retorna: T – Elemento que contenía el nodo que fue
+ removido.
+*/
+////////////////////////////
+template <typename T> T pop(
+ Node<T>*& p){
+
+ return removeFirst<T>(p);
+}
+
+template <typename T> T* pop2(
+ Node<T>*& p){
+
+ return removeFirst2<T>(p);
+}
+
+//------- Cola --------
+
+/* (13)Función enqueue
+Descripción: Agrega el elemento e al final la
+lista direccionada por q.
+Parámetros:
+• Node<T>*& p – Puntero al primer nodo de la lista.
+• Node<T>*& q – Puntero al último nodo de la lista.
+• T e – Elemento que vamos a agregar al final de
+   la lista (q).
+Retorna: Node<T>* – Dirección del nodo que
+contiene al elemento que se agregó.
+ */
+//////////////////////////////////
+template <typename T>Node<T>* enqueue(
+ Node<T>*& p, Node<T>*& q, T e){
+
+ if(p==NULL){
+ q=add<T>(p,e);
+ }
+ else{
+  Node<T>* nuevo=new Node<T>();
+  nuevo->info=e;nuevo->sig=NULL;
+  q->sig=nuevo;
+  q=nuevo;
+ }
+ return q;
+}
+/* (14)Descripción: Remueve el primer nodo de la
+ *   lista direccionada por p.
+Parámetros:
+• Node<T>*& p – Puntero al primer nodo de la lista.
+• Node<T>*& q – Puntero al último nodo de la lista.
+Retorna: T – Elemento que contenía el nodo que
+ fue removido.
+ */
+///////////////////////////////
+template <typename T>T dequeue(
+ Node<T>*& p, Node<T>*& q){
+
+ if(p!=q){
+  removeFirst<T>(p);
+ }
+ else{
+  p==NULL;q==NULL;
+ }
+}
+
+// LISTA CIRCULAR
+
+/* q->al ultimo elemento
+ * q->sig al primer elemento
+*/
+
+/*  Función enqueue (sobrecarga)
+Prototipo: Node<T>* enqueue(Node<T>*& q,T e);
+Descripción: Agrega el elemento e al final la lista
+ circular direccionada por q.
+Parámetros:
+• Node<T>*& q – Puntero al último nodo de la
+   lista circular.
+• T e – Elemento que vamos a agregar al final
+   de la lista (q).
+Retorna: Node<T>* – Dirección del nodo que
+   contiene al elemento que se agregó.
+ */
+//////////////////////////////////
+template <typename T>Node<T>* enqueue(
+ Node<T>*& q, T e){
+
+ Node<T>* nuevo=new Node<T>();
+ nuevo->info=e;
+
+ if(q!=NULL){
+
+  nuevo->sig=q->sig;
+  q->sig=nuevo;
+ }
+ else{
+
+  nuevo->sig=nuevo;
+ }
+
+ q=nuevo;
+
+ return q;
+}
+
+/* Función dequeue (sobrecarga)
+ * Descripción: Remueve el primer nodo de la lista
+ *  circular direccionada por q.
+Parámetro: Node<T>*& q – Puntero al último nodo
+ de la lista circular.
+Retorna: T – Elemento que contenía el nodo que
+ fue removido.
+ */
+///////////////////////////////
+template <typename T>T dequeue(
+ Node<T>*& q){
+
+
+ Node<T>* aux=q->sig;
+ T t=aux->info;
+
+ if(aux!=q){
+  q->sig=aux->sig;
+  delete aux;
+ }
+ else{
+  q=NULL;
+ }
+
+ return t;
+}
+
+
+
